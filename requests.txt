@@ -1,0 +1,43 @@
+curl -X 'GET' \
+  'http://localhost:8080/product' \
+  -H 'accept: */*'
+
+curl -X 'PUT' \
+  'http://localhost:8080/product' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "id": 0,
+  "name": "Rice",
+  "description": "Integral rice",
+  "price": 12.99,
+  "expirationDate": "2025-10-10",
+  "stock": 10,
+  "supplier": "Walmart",
+  "active": true
+}'
+
+curl -X 'POST' \
+  'http://localhost:8080/product' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "name": "Rice",
+  "description": "Integral rice",
+  "price": 12.99,
+  "expirationDate": "2025-10-10",
+  "stock": 10,
+  "supplier": "Walmart"
+}'
+
+curl -X 'GET' \
+  'http://localhost:8080/product/1' \
+  -H 'accept: */*'
+
+curl -X 'DELETE' \
+  'http://localhost:8080/product/physic/1' \
+  -H 'accept: */*'
+
+curl -X 'DELETE' \
+  'http://localhost:8080/product/logic/1' \
+  -H 'accept: */*'
