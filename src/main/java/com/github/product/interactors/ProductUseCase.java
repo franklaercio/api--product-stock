@@ -29,4 +29,14 @@ public class ProductUseCase {
 
         return this.productRepository.update(productFounded);
     }
+
+    public Product findById(Long id) {
+        Product product = this.productRepository.findById(id);
+
+        if(product == null) {
+            throw new NotFoundException("Could not found this product!");
+        }
+
+        return product;
+    }
 }

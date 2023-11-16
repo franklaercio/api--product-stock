@@ -1,9 +1,8 @@
 package com.github.product.transportlayers;
 
 import com.github.product.transportlayers.data.CreateProductRequest;
-import com.github.product.transportlayers.data.CreateProductResponse;
+import com.github.product.transportlayers.data.ProductResponse;
 import com.github.product.transportlayers.data.UpdateProductRequest;
-import com.github.product.transportlayers.data.UpdateProductResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -20,13 +19,23 @@ public interface ProductController {
             @ApiResponse(responseCode = "400", description = "One of items it's invalid", content = @Content),
             @ApiResponse(responseCode = "500", description = "Internal error", content = @Content)
     })
-    ResponseEntity<CreateProductResponse> create(CreateProductRequest request);
+    ResponseEntity<ProductResponse> create(CreateProductRequest request);
 
     @Operation(summary = "Update one product", description = "This endpoint can be update one product in stock.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Product updated with success"),
             @ApiResponse(responseCode = "400", description = "One of items it's invalid", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Product not found", content = @Content),
             @ApiResponse(responseCode = "500", description = "Internal error", content = @Content)
     })
-    ResponseEntity<UpdateProductResponse> update(UpdateProductRequest request);
+    ResponseEntity<ProductResponse> update(UpdateProductRequest request);
+
+    @Operation(summary = "Find one product by id", description = "This endpoint can be use to find one product in stock.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Product founded with success"),
+            @ApiResponse(responseCode = "400", description = "You need to inform the id", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Product not found", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Internal error", content = @Content)
+    })
+    ResponseEntity<ProductResponse> findById(Long id);
 }
