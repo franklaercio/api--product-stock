@@ -45,4 +45,21 @@ public class ProductUseCase {
     public List<Product> findAll() {
         return this.productRepository.findAll();
     }
+
+    public void deletePhysic(Long id) {
+        Product productFounded = this.productRepository.findById(id);
+
+        if(productFounded != null) {
+            this.productRepository.deleteById(id);
+        }
+    }
+
+    public void deleteLogic(Long id) {
+        Product productFounded = this.productRepository.findById(id);
+
+        if(productFounded != null) {
+            productFounded.setActive(false);
+            this.productRepository.update(productFounded);
+        }
+    }
 }

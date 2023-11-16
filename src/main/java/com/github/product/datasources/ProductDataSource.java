@@ -36,7 +36,7 @@ public class ProductDataSource implements ProductRepository {
     public Product save(Product product) {
         try {
             ProductEntity entity = mapper.sourceToDestination(product);
-            entity.setActive(false);
+            entity.setActive(true);
 
             ProductEntity saved = this.productJpaRepository.save(entity);
 
@@ -66,6 +66,15 @@ public class ProductDataSource implements ProductRepository {
             return this.mapper.sourceListToDestination(list);
         } catch (Exception ex) {
             throw new InternalServerError("Could not possible to find all products");
+        }
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        try {
+            this.productJpaRepository.deleteById(id);
+        } catch (Exception ex) {
+            throw new InternalServerError("Could not possible to delete this product: " + id);
         }
     }
 }

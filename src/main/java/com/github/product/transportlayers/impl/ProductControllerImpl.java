@@ -58,4 +58,20 @@ public class ProductControllerImpl implements ProductController {
 
         return ResponseEntity.ok(mapper.sourceListToDestination(response));
     }
+
+    @Override
+    @DeleteMapping("/physic/{id}")
+    public ResponseEntity<Void> deletePhysicById(@PathVariable Long id) {
+        this.productUseCase.deletePhysic(id);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @Override
+    @DeleteMapping("/logic/{id}")
+    public ResponseEntity<Void> deleteLogicById(@PathVariable Long id) {
+        this.productUseCase.deleteLogic(id);
+
+        return ResponseEntity.noContent().build();
+    }
 }

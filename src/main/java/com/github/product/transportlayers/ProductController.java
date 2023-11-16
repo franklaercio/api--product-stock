@@ -48,4 +48,20 @@ public interface ProductController {
             @ApiResponse(responseCode = "500", description = "Internal error", content = @Content)
     })
     ResponseEntity<List<ProductResponse>> findAll();
+
+    @Operation(summary = "Delete physic product", description = "This endpoint can be use to delete one product in stock.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Product has been deleted with success"),
+            @ApiResponse(responseCode = "400", description = "You need to check your request", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Internal error", content = @Content)
+    })
+    ResponseEntity<Void> deletePhysicById(Long id);
+
+    @Operation(summary = "Delete logic product", description = "This endpoint can be use to delete one product in stock.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Product has been deleted with success"),
+            @ApiResponse(responseCode = "400", description = "You need to check your request", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Internal error", content = @Content)
+    })
+    ResponseEntity<Void> deleteLogicById(Long id);
 }
