@@ -8,6 +8,7 @@ import com.github.product.exceptions.InternalServerError;
 import com.github.product.repositories.ProductRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -54,6 +55,17 @@ public class ProductDataSource implements ProductRepository {
             return this.mapper.destinationToSource(updated);
         } catch (Exception ex) {
             throw new InternalServerError("Could not possible update this product: " + product.getId());
+        }
+    }
+
+    @Override
+    public List<Product> findAll() {
+        try {
+            List<ProductEntity> list = this.productJpaRepository.findAll();
+
+            return this.mapper.sourceListToDestination(list);
+        } catch (Exception ex) {
+            throw new InternalServerError("Could not possible to find all products");
         }
     }
 }

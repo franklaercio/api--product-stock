@@ -6,18 +6,18 @@ import com.github.product.transportlayers.ProductController;
 import com.github.product.transportlayers.data.CreateProductRequest;
 import com.github.product.transportlayers.data.ProductResponse;
 import com.github.product.transportlayers.data.UpdateProductRequest;
-import com.github.product.transportlayers.mappers.CreateProductMapper;
-import com.github.product.transportlayers.mappers.UpdateProductMapper;
+import com.github.product.transportlayers.mappers.ProductMapper;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/product")
 public class ProductControllerImpl implements ProductController {
 
-    private final CreateProductMapper createProductMapper = CreateProductMapper.INSTANCE;
-    private final UpdateProductMapper updateProductMapper = UpdateProductMapper.INSTANCE;
+    private final ProductMapper mapper = ProductMapper.INSTANCE;
 
     private final ProductUseCase productUseCase;
 
@@ -28,19 +28,19 @@ public class ProductControllerImpl implements ProductController {
     @Override
     @PostMapping
     public ResponseEntity<ProductResponse> create(@Valid @RequestBody CreateProductRequest request) {
-        Product product = this.createProductMapper.sourceToDestination(request);
+        Product product = this.mapper.sourceToDestination(request);
         Product response = this.productUseCase.save(product);
 
-        return ResponseEntity.ok(createProductMapper.destinationToSource(response));
+        return ResponseEntity.ok(mapper.destinationToSource(response));
     }
 
     @Override
     @PutMapping
     public ResponseEntity<ProductResponse> update(@Valid @RequestBody UpdateProductRequest request) {
-        Product product = this.updateProductMapper.sourceToDestination(request);
+        Product product = this.mapper.sourceToDestination(request);
         Product response = this.productUseCase.update(product);
 
-        return ResponseEntity.ok(updateProductMapper.destinationToSource(response));
+        return ResponseEntity.ok(mapper.destinationToSource(response));
     }
 
     @Override
@@ -48,6 +48,14 @@ public class ProductControllerImpl implements ProductController {
     public ResponseEntity<ProductResponse> findById(@PathVariable Long id) {
         Product response = this.productUseCase.findById(id);
 
-        return ResponseEntity.ok(updateProductMapper.destinationToSource(response));
+        return ResponseEntity.ok(mapper.destinationToSource(response));
+    }
+
+    @Override
+    @GetMapping
+    public ResponseEntity<List<ProductResponse>> findAll() {
+        List<Product> response = this.productUseCase.findAll();
+
+        return ResponseEntity.ok(mapper.sourceListToDestination(response));
     }
 }

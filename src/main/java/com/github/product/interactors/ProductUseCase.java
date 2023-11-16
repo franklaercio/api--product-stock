@@ -5,6 +5,8 @@ import com.github.product.exceptions.NotFoundException;
 import com.github.product.repositories.ProductRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProductUseCase {
 
@@ -38,5 +40,9 @@ public class ProductUseCase {
         }
 
         return product;
+    }
+
+    public List<Product> findAll() {
+        return this.productRepository.findAll();
     }
 }

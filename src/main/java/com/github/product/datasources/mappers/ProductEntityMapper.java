@@ -5,6 +5,8 @@ import com.github.product.entities.Product;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 @Mapper
 public interface ProductEntityMapper {
 
@@ -13,4 +15,6 @@ public interface ProductEntityMapper {
     ProductEntity sourceToDestination(Product source);
 
     Product destinationToSource(ProductEntity destination);
+
+    List<Product> sourceListToDestination(List<ProductEntity> source);
 }

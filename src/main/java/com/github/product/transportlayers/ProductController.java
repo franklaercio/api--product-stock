@@ -10,6 +10,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+
 @Tag(name = "Product", description = "Endpoints of manager product stock")
 public interface ProductController {
 
@@ -38,4 +40,12 @@ public interface ProductController {
             @ApiResponse(responseCode = "500", description = "Internal error", content = @Content)
     })
     ResponseEntity<ProductResponse> findById(Long id);
+
+    @Operation(summary = "Find all products", description = "This endpoint can be use to find all products in stock.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Products founded with success"),
+            @ApiResponse(responseCode = "400", description = "You need to check your request", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Internal error", content = @Content)
+    })
+    ResponseEntity<List<ProductResponse>> findAll();
 }
