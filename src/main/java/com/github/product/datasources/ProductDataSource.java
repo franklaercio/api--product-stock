@@ -4,8 +4,11 @@ import com.github.product.datasources.entities.ProductEntity;
 import com.github.product.datasources.jpa.ProductJpaRepository;
 import com.github.product.datasources.mappers.ProductEntityMapper;
 import com.github.product.entities.Product;
+import com.github.product.exceptions.InternalServerError;
 import com.github.product.repositories.ProductRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class ProductDataSource implements ProductRepository {
@@ -19,12 +22,38 @@ public class ProductDataSource implements ProductRepository {
     }
 
     @Override
+    public Product findById(Long id) {
+        try {
+            Optional<ProductEntity> entity = this.productJpaRepository.findById(id);
+            return entity.map(this.mapper::destinationToSource).orElse(null);
+        } catch (Exception ex) {
+            throw new InternalServerError("Could not possible find this product: " + id);
+        }
+    }
+
+    @Override
     public Product save(Product product) {
-        ProductEntity entity = mapper.sourceToDestination(product);
-        entity.setActive(false);
+        try {
+            ProductEntity entity = mapper.sourceToDestination(product);
+            entity.setActive(false);
 
-        ProductEntity saved = this.productJpaRepository.save(entity);
+            ProductEntity saved = this.productJpaRepository.save(entity);
 
-        return this.mapper.destinationToSource(saved);
+            return this.mapper.destinationToSource(saved);
+        } catch (Exception ex) {
+            throw new InternalServerError("Could not possible save this product: " + product.getName());
+        }
+    }
+
+    @Override
+    public Product update(Product product) {
+        try {
+            ProductEntity entity = mapper.sourceToDestination(product);
+            ProductEntity updated = this.productJpaRepository.save(entity);
+
+            return this.mapper.destinationToSource(updated);
+        } catch (Exception ex) {
+            throw new InternalServerError("Could not possible update this product: " + product.getId());
+        }
     }
 }
