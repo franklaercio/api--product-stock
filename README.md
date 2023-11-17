@@ -3,7 +3,11 @@
 ## Description
 This is a simple product stock management system. It is a console application that allows 
 the user to add, edit, delete, and view products. The user can also view the total value 
-of the stock and the total value of the stock by category.
+of the stock and the total value of the stock by category. <br>
+
+You can view the API documentation by entering the following URL in a browser on [Heroku](https://api--product-stock-73317c90543a.herokuapp.com/swagger-ui/index.html#/). <br>
+
+If you can watch a video of the application running on [YouTube](https://youtu.be/xVugwl5R6YU).
 
 ## Technologies
 * Java 21
